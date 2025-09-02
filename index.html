@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Villager Command Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⛏️ VILLAGER GENERATOR ⛏️</h1>
+            <p style="font-size: 15px;">Create custom Minecraft villagers</p>
+        </header>
+
+        <main class="main-card">
+            <!-- Status Messages Container -->
+            <div id="statusContainer"></div>
+
+            <!-- Basic Information Section -->
+            <section class="form-section">
+                <h3 class="section-title">⚙️ SETTINGS</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">NAME</label>
+                        <input type="text" id="villagerName" class="form-input" placeholder="Name" value="Custom Villager">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">JOB</label>
+                        <select id="profession" class="form-select">
+                            <option value="minecraft:none">NONE</option>
+                            <option value="minecraft:armorer">ARMORER</option>
+                            <option value="minecraft:butcher">BUTCHER</option>
+                            <option value="minecraft:cartographer">CARTOGRAPHER</option>
+                            <option value="minecraft:cleric">CLERIC</option>
+                            <option value="minecraft:farmer">FARMER</option>
+                            <option value="minecraft:fisherman">FISHERMAN</option>
+                            <option value="minecraft:fletcher">FLETCHER</option>
+                            <option value="minecraft:leatherworker">LEATHERWORKER</option>
+                            <option value="minecraft:librarian" selected>LIBRARIAN</option>
+                            <option value="minecraft:mason">MASON</option>
+                            <option value="minecraft:shepherd">SHEPHERD</option>
+                            <option value="minecraft:toolsmith">TOOLSMITH</option>
+                            <option value="minecraft:weaponsmith">WEAPONSMITH</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">BIOME</label>
+                        <select id="biomeType" class="form-select">
+                            <option value="minecraft:plains" selected>PLAINS</option>
+                            <option value="minecraft:desert">DESERT</option>
+                            <option value="minecraft:jungle">JUNGLE</option>
+                            <option value="minecraft:savanna">SAVANNA</option>
+                            <option value="minecraft:snow">SNOW</option>
+                            <option value="minecraft:swamp">SWAMP</option>
+                            <option value="minecraft:taiga">TAIGA</option>
+                            <option value="minecraft:mountains">MOUNTAINS</option>
+                            <option value="minecraft:forest">FOREST</option>
+                            <option value="minecraft:birch_forest">BIRCH FOREST</option>
+                            <option value="minecraft:dark_forest">DARK FOREST</option>
+                            <option value="minecraft:flower_forest">FLOWER FOREST</option>
+                            <option value="minecraft:bamboo_jungle">BAMBOO JUNGLE</option>
+                            <option value="minecraft:sparse_jungle">SPARSE JUNGLE</option>
+                            <option value="minecraft:windswept_hills">WINDSWEPT HILLS</option>
+                            <option value="minecraft:windswept_forest">WINDSWEPT FOREST</option>
+                            <option value="minecraft:windswept_gravelly_hills">WINDSWEPT GRAVELLY HILLS</option>
+                            <option value="minecraft:windswept_savanna">WINDSWEPT SAVANNA</option>
+                            <option value="minecraft:savanna_plateau">SAVANNA PLATEAU</option>
+                            <option value="minecraft:badlands">BADLANDS</option>
+                            <option value="minecraft:eroded_badlands">ERODED BADLANDS</option>
+                            <option value="minecraft:wooded_badlands">WOODED BADLANDS</option>
+                            <option value="minecraft:meadow">MEADOW</option>
+                            <option value="minecraft:cherry_grove">CHERRY GROVE</option>
+                            <option value="minecraft:grove">GROVE</option>
+                            <option value="minecraft:snowy_slopes">SNOWY SLOPES</option>
+                            <option value="minecraft:frozen_peaks">FROZEN PEAKS</option>
+                            <option value="minecraft:jagged_peaks">JAGGED PEAKS</option>
+                            <option value="minecraft:stony_peaks">STONY PEAKS</option>
+                            <option value="minecraft:snowy_taiga">SNOWY TAIGA</option>
+                            <option value="minecraft:old_growth_birch_forest">OLD GROWTH BIRCH FOREST</option>
+                            <option value="minecraft:old_growth_pine_taiga">OLD GROWTH PINE TAIGA</option>
+                            <option value="minecraft:old_growth_spruce_taiga">OLD GROWTH SPRUCE TAIGA</option>
+                            <option value="minecraft:snowy_beach">SNOWY BEACH</option>
+                            <option value="minecraft:beach">BEACH</option>
+                            <option value="minecraft:stony_shore">STONY SHORE</option>
+                            <option value="minecraft:warm_ocean">WARM OCEAN</option>
+                            <option value="minecraft:lukewarm_ocean">LUKEWARM OCEAN</option>
+                            <option value="minecraft:deep_lukewarm_ocean">DEEP LUKEWARM OCEAN</option>
+                            <option value="minecraft:ocean">OCEAN</option>
+                            <option value="minecraft:deep_ocean">DEEP OCEAN</option>
+                            <option value="minecraft:cold_ocean">COLD OCEAN</option>
+                            <option value="minecraft:deep_cold_ocean">DEEP COLD OCEAN</option>
+                            <option value="minecraft:frozen_ocean">FROZEN OCEAN</option>
+                            <option value="minecraft:deep_frozen_ocean">DEEP FROZEN OCEAN</option>
+                            <option value="minecraft:mushroom_fields">MUSHROOM FIELDS</option>
+                            <option value="minecraft:dripstone_caves">DRIPSTONE CAVES</option>
+                            <option value="minecraft:lush_caves">LUSH CAVES</option>
+                            <option value="minecraft:deep_dark">DEEP DARK</option>
+                            <option value="minecraft:nether_wastes">NETHER WASTES</option>
+                            <option value="minecraft:soul_sand_valley">SOUL SAND VALLEY</option>
+                            <option value="minecraft:crimson_forest">CRIMSON FOREST</option>
+                            <option value="minecraft:warped_forest">WARPED FOREST</option>
+                            <option value="minecraft:basalt_deltas">BASALT DELTAS</option>
+                            <option value="minecraft:the_end">THE END</option>
+                            <option value="minecraft:small_end_islands">SMALL END ISLANDS</option>
+                            <option value="minecraft:end_midlands">END MIDLANDS</option>
+                            <option value="minecraft:end_highlands">END HIGHLANDS</option>
+                            <option value="minecraft:end_barrens">END BARRENS</option>
+                            <option value="minecraft:mangrove_swamp">MANGROVE SWAMP</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LVL</label>
+                        <input type="number" id="villagerLevel" class="form-input" min="1" max="5" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">XP</label>
+                        <input type="number" id="xpValue" class="form-input" min="0" max="1000" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">HP</label>
+                        <input type="number" id="health" class="form-input" min="1" max="1024" step="0.5" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">X</label>
+                        <input type="text" id="posX" class="form-input" placeholder="~" value="~">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Y</label>
+                        <input type="text" id="posY" class="form-input" placeholder="~1" value="~1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Z</label>
+                        <input type="text" id="posZ" class="form-input" placeholder="~" value="~">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Behavior Options -->
+            <section class="form-section">
+                <h3 class="section-title">🎮 OPTIONS</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="noAI">
+                        <label for="noAI">NO AI</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="invulnerable">
+                        <label for="invulnerable">INVULNERABLE</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="persistenceRequired" checked>
+                        <label for="persistenceRequired">PERSISTENT</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="silent">
+                        <label for="silent">SILENT</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="noGravity">
+                        <label for="noGravity">NO GRAVITY</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="glowing">
+                        <label for="glowing">GLOWING</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="customNameVisible">
+                        <label for="customNameVisible">SHOW NAME</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="baby">
+                        <label for="baby">BABY</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trading Section -->
+            <section class="form-section">
+                <h3 class="section-title">💎 TRADING</h3>
+                <div id="tradesContainer" class="trades-section">
+                    <!-- Trades will be dynamically generated here -->
+                </div>
+                <button id="addTradeBtn" class="add-trade">+ ADD TRADE</button>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button id="generateBtn" class="btn btn-primary">⚡ GENERATE</button>
+                <button id="copyBtn" class="btn btn-success">📋 COPY</button>
+                <button id="resetBtn" class="btn btn-secondary">🔄 RESET</button>
+            </div>
+
+            <!-- Command Preview -->
+            <section class="command-preview">
+                <h3>📜 COMMAND OUTPUT</h3>
+                <div id="commandOutput" class="command-output">
+                    Click "GENERATE" to create your villager command...
+                </div>
+            </section>
+
+            <!-- Kill Command Section (appears when invulnerable is checked) -->
+            <section class="command-preview" id="killCommandSection" style="display: none;">
+                <h3>⚔️ KILL COMMAND</h3>
+                <p style="color: var(--mc-text-secondary); font-size: 9px; margin-bottom: 6px; text-transform: uppercase;">
+                    Commands to remove invulnerable villagers:
+                </p>
+                <div id="killCommandOutput" class="command-output">
+                    Kill command will appear here...
+                </div>
+                <div style="margin-top: 6px;">
+                    <button id="copyKillBtn" class="btn btn-warning">⚔️ COPY KILL</button>
+                </div>
+            </section>
+
+            <!-- Advanced Options -->
+            <section class="form-section advanced-options">
+                <h3 class="section-title collapsible collapsed" id="advancedToggle">🔧 ADVANCED</h3>
+                <div class="collapsible-content collapsed" id="advancedContent">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">SAVE</label>
+                            <button id="savePresetBtn" class="btn btn-secondary">SAVE</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">LOAD</label>
+                            <select id="loadPresetBtn" class="form-select">
+                                <option value="">LOAD PRESET...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">EXPORT</label>
+                            <button id="exportBtn" class="btn btn-secondary">EXPORT</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">IMPORT</label>
+                            <button id="importBtn" class="btn btn-secondary">IMPORT</button>
+                            <input type="file" id="importFile" accept=".json" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Section -->
+            <section class="form-section">
+                <h3 class="section-title">💡 TIPS</h3>
+                <div class="form-group full-width">
+                    <ul style="color: var(--mc-text-secondary); line-height: 1.4; margin: 10px 0; font-size: 12px; text-transform: uppercase;">
+                        <li>POSITION: USE ~ FOR RELATIVE OR EXACT COORDS</li>
+                        <li>TRADING: ADD MULTIPLE TRADES WITH 1-2 BUY ITEMS</li>
+                        <li>INVULNERABLE: SHOWS KILL COMMANDS FOR REMOVAL</li>
+                        <li>ITEMS: STANDARD MINECRAFT IDS (AUTO-PREFIXED)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin-top: 20px; color: var(--mc-text-muted); font-size: 14px;">
+            <p>MINECRAFT VILLAGER GENERATOR 1.21+</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -175,10 +175,6 @@ This generator creates commands compatible with:
 - Bedrock Edition uses different command syntax
 - Complex enchantments require manual NBT editing
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **Mojang Studios** for creating Minecraft
@@ -198,15 +194,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Made with ❤️ for the Minecraft community**
 
 ### 🔗 Quick Links
-- [Live Demo](https://your-username.github.io/CutomVillager) *(Update with your GitHub Pages URL)*
-- [Latest Release](https://github.com/your-username/CutomVillager/releases)
-- [Issues](https://github.com/your-username/CutomVillager/issues)
-- [Wiki](https://github.com/your-username/CutomVillager/wiki)
+- [Live Demo](https://eman225511.github.io/CutomVillager) 
+- [Issues](https://github.com/eman225511/CutomVillager/issues)
+- [Wiki](https://github.com/eman225511e/CutomVillager/wiki)
 
 ### 📊 Project Stats
-![GitHub stars](https://img.shields.io/github/stars/your-username/CutomVillager?style=social)
-![GitHub forks](https://img.shields.io/github/forks/your-username/CutomVillager?style=social)
-![GitHub issues](https://img.shields.io/github/issues/your-username/CutomVillager)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/CutomVillager)
+![GitHub stars](https://img.shields.io/github/stars/eman225511/CutomVillager?style=social)
+![GitHub forks](https://img.shields.io/github/forks/eman225511/CutomVillager?style=social)
+![GitHub issues](https://img.shields.io/github/issues/eman225511/CutomVillager)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/eman225511/CutomVillager)
 
-*Replace `your-username` with your actual GitHub username*
+

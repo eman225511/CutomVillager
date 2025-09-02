@@ -683,3 +683,106 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Searchable Select Styles */
+.searchable-select {
+  position: relative;
+  width: 100%;
+}
+
+.searchable-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--mc-bg-input);
+  border: 2px solid var(--mc-border-color);
+  color: var(--mc-text-primary);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  cursor: text;
+}
+
+.searchable-input:focus {
+  outline: none;
+  border-color: var(--mc-green);
+  box-shadow: 0 0 10px rgba(85, 255, 85, 0.3);
+}
+
+.searchable-input::placeholder {
+  color: var(--mc-text-muted);
+  opacity: 0.7;
+}
+
+.searchable-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--mc-bg-input);
+  border: 2px solid var(--mc-border-color);
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: var(--mc-shadow);
+}
+
+.searchable-option {
+  padding: 8px 12px;
+  color: var(--mc-text-primary);
+  cursor: pointer;
+  font-size: 10px;
+  border-bottom: 1px solid var(--mc-border-color);
+  transition: background-color 0.2s ease;
+}
+
+.searchable-option:hover {
+  background-color: var(--mc-bg-secondary);
+}
+
+.searchable-option.selected {
+  background-color: var(--mc-green);
+  color: var(--mc-dark-bg);
+}
+
+.searchable-option.more-items {
+  color: var(--mc-text-muted);
+  font-style: italic;
+  cursor: default;
+  background-color: var(--mc-bg-secondary);
+}
+
+.searchable-option.more-items:hover {
+  background-color: var(--mc-bg-secondary);
+}
+
+/* Ensure dropdown appears above other elements */
+.form-group:has(.searchable-select) {
+  z-index: 1;
+  position: relative;
+}
+
+.trade-item .form-group:nth-child(1),
+.trade-item .form-group:nth-child(3),
+.trade-item .form-group:nth-child(5) {
+  z-index: 10;
+}
+
+/* Custom scrollbar for dropdown */
+.searchable-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.searchable-dropdown::-webkit-scrollbar-track {
+  background: var(--mc-bg-secondary);
+}
+
+.searchable-dropdown::-webkit-scrollbar-thumb {
+  background: var(--mc-border-color);
+  border-radius: 3px;
+}
+
+.searchable-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--mc-text-muted);
+}

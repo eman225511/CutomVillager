@@ -85,58 +85,115 @@ class VillagerCommandGenerator {
     createTradeElement(trade, index) {
         const div = document.createElement('div');
         div.className = 'trade-item';
-        div.innerHTML = `
-            <div class="trade-header">
-                <span class="trade-number">Trade ${index + 1}</span>
-                ${this.trades.length > 1 ? `<button class="remove-trade" onclick="generator.removeTrade(${trade.id})">Remove</button>` : ''}
-            </div>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label class="form-label">Buy Item 1</label>
-                    <select class="form-select" id="buyItem_${trade.id}" onchange="generator.updateTrade(${trade.id}, 'buyItem', this.value)">
-                        ${this.getItemOptions(trade.buyItem)}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Count</label>
-                    <input type="number" class="form-input" min="1" max="64" value="${trade.buyCount}" 
-                           onchange="generator.updateTrade(${trade.id}, 'buyCount', parseInt(this.value))">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Buy Item 2 (Optional)</label>
-                    <select class="form-select" id="buyItem2_${trade.id}" onchange="generator.updateTrade(${trade.id}, 'buyItem2', this.value)">
-                        <option value="">None</option>
-                        ${this.getItemOptions(trade.buyItem2)}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Count</label>
-                    <input type="number" class="form-input" min="0" max="64" value="${trade.buyCount2}" 
-                           onchange="generator.updateTrade(${trade.id}, 'buyCount2', parseInt(this.value))">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Sell Item</label>
-                    <select class="form-select" id="sellItem_${trade.id}" onchange="generator.updateTrade(${trade.id}, 'sellItem', this.value)">
-                        ${this.getItemOptions(trade.sellItem)}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Count</label>
-                    <input type="number" class="form-input" min="1" max="64" value="${trade.sellCount}" 
-                           onchange="generator.updateTrade(${trade.id}, 'sellCount', parseInt(this.value))">
-                </div>
-                <div class="form-group">
-                    <label class="form-label tooltip" data-tooltip="How many times this trade can be used">Max Uses</label>
-                    <input type="number" class="form-input" min="1" max="999999" value="${trade.maxUses}" 
-                           onchange="generator.updateTrade(${trade.id}, 'maxUses', parseInt(this.value))">
-                </div>
-                <div class="form-group">
-                    <label class="form-label tooltip" data-tooltip="Experience points gained from trade">XP Reward</label>
-                    <input type="number" class="form-input" min="0" max="100" value="${trade.xp}" 
-                           onchange="generator.updateTrade(${trade.id}, 'xp', parseInt(this.value))">
-                </div>
-            </div>
+        
+        // Create the basic structure
+        const tradeHeader = document.createElement('div');
+        tradeHeader.className = 'trade-header';
+        tradeHeader.innerHTML = `
+            <span class="trade-number">Trade ${index + 1}</span>
+            ${this.trades.length > 1 ? `<button class="remove-trade" onclick="generator.removeTrade(${trade.id})">Remove</button>` : ''}
         `;
+        
+        const formGrid = document.createElement('div');
+        formGrid.className = 'form-grid';
+        
+        // Buy Item 1
+        const buyItem1Group = document.createElement('div');
+        buyItem1Group.className = 'form-group';
+        const buyItem1Label = document.createElement('label');
+        buyItem1Label.className = 'form-label';
+        buyItem1Label.textContent = 'Buy Item 1';
+        const buyItem1Select = this.createSearchableSelect(`buyItem_${trade.id}`, trade.buyItem);
+        buyItem1Select.querySelector('input').addEventListener('change', (e) => {
+            this.updateTrade(trade.id, 'buyItem', e.target.value);
+        });
+        buyItem1Group.appendChild(buyItem1Label);
+        buyItem1Group.appendChild(buyItem1Select);
+        
+        // Buy Count 1
+        const buyCount1Group = document.createElement('div');
+        buyCount1Group.className = 'form-group';
+        buyCount1Group.innerHTML = `
+            <label class="form-label">Count</label>
+            <input type="number" class="form-input" min="1" max="64" value="${trade.buyCount}" 
+                   onchange="generator.updateTrade(${trade.id}, 'buyCount', parseInt(this.value))">
+        `;
+        
+        // Buy Item 2 (Optional)
+        const buyItem2Group = document.createElement('div');
+        buyItem2Group.className = 'form-group';
+        const buyItem2Label = document.createElement('label');
+        buyItem2Label.className = 'form-label';
+        buyItem2Label.textContent = 'Buy Item 2 (Optional)';
+        const buyItem2Select = this.createSearchableSelect(`buyItem2_${trade.id}`, trade.buyItem2);
+        buyItem2Select.querySelector('input').addEventListener('change', (e) => {
+            this.updateTrade(trade.id, 'buyItem2', e.target.value);
+        });
+        buyItem2Group.appendChild(buyItem2Label);
+        buyItem2Group.appendChild(buyItem2Select);
+        
+        // Buy Count 2
+        const buyCount2Group = document.createElement('div');
+        buyCount2Group.className = 'form-group';
+        buyCount2Group.innerHTML = `
+            <label class="form-label">Count</label>
+            <input type="number" class="form-input" min="0" max="64" value="${trade.buyCount2}" 
+                   onchange="generator.updateTrade(${trade.id}, 'buyCount2', parseInt(this.value))">
+        `;
+        
+        // Sell Item
+        const sellItemGroup = document.createElement('div');
+        sellItemGroup.className = 'form-group';
+        const sellItemLabel = document.createElement('label');
+        sellItemLabel.className = 'form-label';
+        sellItemLabel.textContent = 'Sell Item';
+        const sellItemSelect = this.createSearchableSelect(`sellItem_${trade.id}`, trade.sellItem, false);
+        sellItemSelect.querySelector('input').addEventListener('change', (e) => {
+            this.updateTrade(trade.id, 'sellItem', e.target.value);
+        });
+        sellItemGroup.appendChild(sellItemLabel);
+        sellItemGroup.appendChild(sellItemSelect);
+        
+        // Sell Count
+        const sellCountGroup = document.createElement('div');
+        sellCountGroup.className = 'form-group';
+        sellCountGroup.innerHTML = `
+            <label class="form-label">Count</label>
+            <input type="number" class="form-input" min="1" max="64" value="${trade.sellCount}" 
+                   onchange="generator.updateTrade(${trade.id}, 'sellCount', parseInt(this.value))">
+        `;
+        
+        // Max Uses
+        const maxUsesGroup = document.createElement('div');
+        maxUsesGroup.className = 'form-group';
+        maxUsesGroup.innerHTML = `
+            <label class="form-label tooltip" data-tooltip="How many times this trade can be used">Max Uses</label>
+            <input type="number" class="form-input" min="1" max="999999" value="${trade.maxUses}" 
+                   onchange="generator.updateTrade(${trade.id}, 'maxUses', parseInt(this.value))">
+        `;
+        
+        // XP Reward
+        const xpGroup = document.createElement('div');
+        xpGroup.className = 'form-group';
+        xpGroup.innerHTML = `
+            <label class="form-label tooltip" data-tooltip="Experience points gained from trade">XP Reward</label>
+            <input type="number" class="form-input" min="0" max="100" value="${trade.xp}" 
+                   onchange="generator.updateTrade(${trade.id}, 'xp', parseInt(this.value))">
+        `;
+        
+        // Append all elements
+        formGrid.appendChild(buyItem1Group);
+        formGrid.appendChild(buyCount1Group);
+        formGrid.appendChild(buyItem2Group);
+        formGrid.appendChild(buyCount2Group);
+        formGrid.appendChild(sellItemGroup);
+        formGrid.appendChild(sellCountGroup);
+        formGrid.appendChild(maxUsesGroup);
+        formGrid.appendChild(xpGroup);
+        
+        div.appendChild(tradeHeader);
+        div.appendChild(formGrid);
+        
         return div;
     }
 
@@ -150,98 +207,229 @@ class VillagerCommandGenerator {
 
     getItemOptions(selectedItem = '') {
         const items = [
-            '', 'apple', 'arrow', 'baked_potato', 'beef', 'beetroot', 'beetroot_seeds', 'book', 'bow',
-            'bread', 'brick', 'bucket', 'carrot', 'chicken', 'clay_ball', 'coal', 'cobblestone',
-            'cod', 'cooked_beef', 'cooked_chicken', 'cooked_cod', 'cooked_mutton', 'cooked_porkchop',
-            'cooked_rabbit', 'cooked_salmon', 'cookie', 'diamond', 'diamond_axe', 'diamond_boots',
-            'diamond_chestplate', 'diamond_helmet', 'diamond_hoe', 'diamond_leggings', 'diamond_pickaxe',
-            'diamond_shovel', 'diamond_sword', 'emerald', 'enchanted_book', 'ender_pearl', 'experience_bottle',
-            'feather', 'flint', 'glass', 'gold_ingot', 'golden_apple', 'golden_carrot', 'gunpowder',
+            '', 'acacia_leaves', 'acacia_log', 'acacia_planks', 'allium', 'amethyst_shard', 'ancient_debris', 'anvil',
+            'apple', 'arrow', 'azure_bluet', 'baked_potato', 'bamboo', 'basalt', 'bee_spawn_egg', 'beef',
+            'beetroot', 'beetroot_seeds', 'beetroot_soup', 'birch_leaves', 'birch_log', 'birch_planks', 
+            'black_dye', 'black_terracotta', 'black_wool', 'blackstone', 'blaze_powder', 'blaze_rod', 
+            'blaze_spawn_egg', 'blue_dye', 'blue_orchid', 'blue_terracotta', 'blue_wool', 'bone', 
+            'bone_meal', 'book', 'bookshelf', 'bow', 'bread', 'brewing_stand', 'brick', 'brown_dye', 
+            'brown_terracotta', 'brown_wool', 'bucket', 'cactus', 'cake', 'carrot', 'carrot_on_a_stick',
+            'cat_spawn_egg', 'cauldron', 'chainmail_boots', 'chainmail_chestplate', 'chainmail_helmet',
+            'chainmail_leggings', 'cherry_leaves', 'cherry_log', 'cherry_planks', 'chest', 'chicken',
+            'chicken_spawn_egg', 'chorus_fruit', 'clay_ball', 'clock', 'coal', 'coal_ore', 'cobblestone',
+            'cocoa_beans', 'cod', 'comparator', 'compass', 'cooked_beef', 'cooked_chicken', 'cooked_cod',
+            'cooked_mutton', 'cooked_porkchop', 'cooked_rabbit', 'cooked_salmon', 'cookie', 'copper_ingot',
+            'copper_ore', 'cornflower', 'cow_spawn_egg', 'creeper_head', 'creeper_spawn_egg', 'crossbow',
+            'cyan_dye', 'cyan_terracotta', 'cyan_wool', 'dandelion', 'dark_oak_leaves', 'dark_oak_log',
+            'dark_oak_planks', 'daylight_detector', 'deepslate_coal_ore', 'deepslate_copper_ore',
+            'deepslate_diamond_ore', 'deepslate_emerald_ore', 'deepslate_gold_ore', 'deepslate_iron_ore',
+            'deepslate_lapis_ore', 'deepslate_redstone_ore', 'diamond', 'diamond_axe', 'diamond_boots',
+            'diamond_chestplate', 'diamond_helmet', 'diamond_hoe', 'diamond_leggings', 'diamond_ore',
+            'diamond_pickaxe', 'diamond_shovel', 'diamond_sword', 'dirt', 'dispenser', 'donkey_spawn_egg',
+            'dragon_breath', 'dragon_egg', 'dragon_head', 'dried_kelp', 'dropper', 'elytra', 'emerald',
+            'emerald_ore', 'enchanted_book', 'enchanting_table', 'end_stone', 'ender_chest', 'ender_dragon_spawn_egg',
+            'ender_pearl', 'enderman_spawn_egg', 'experience_bottle', 'feather', 'fermented_spider_eye',
+            'fishing_rod', 'flint', 'flint_and_steel', 'fox_spawn_egg', 'ghast_spawn_egg', 'ghast_tear',
+            'glass', 'glass_bottle', 'glass_pane', 'glow_berries', 'gold_ingot', 'gold_ore', 'golden_apple',
+            'golden_axe', 'golden_boots', 'golden_carrot', 'golden_chestplate', 'golden_helmet', 'golden_hoe',
+            'golden_leggings', 'golden_pickaxe', 'golden_shovel', 'golden_sword', 'grass_block', 'gravel',
+            'gray_dye', 'gray_terracotta', 'gray_wool', 'green_dye', 'green_terracotta', 'green_wool',
+            'grindstone', 'gunpowder', 'heart_of_the_sea', 'honey_bottle', 'hopper', 'horse_spawn_egg',
             'ink_sac', 'iron_axe', 'iron_boots', 'iron_chestplate', 'iron_helmet', 'iron_ingot',
-            'iron_leggings', 'iron_pickaxe', 'iron_shovel', 'iron_sword', 'item_frame', 'leather',
-            'leather_boots', 'leather_chestplate', 'leather_helmet', 'leather_leggings', 'map',
-            'melon_slice', 'mutton', 'name_tag', 'paper', 'porkchop', 'potato', 'pumpkin', 'quartz',
-            'rabbit', 'rabbit_hide', 'rotten_flesh', 'saddle', 'salmon', 'seeds', 'spider_eye',
-            'stick', 'stone', 'stone_axe', 'stone_hoe', 'stone_pickaxe', 'stone_shovel', 'stone_sword',
-            'string', 'sugar', 'wheat', 'wheat_seeds', 'wooden_axe', 'wooden_hoe', 'wooden_pickaxe',
-            'wooden_shovel', 'wooden_sword',
-            // Food & Farming
-            'beetroot_soup', 'mushroom_stew', 'rabbit_stew', 'suspicious_stew', 'sweet_berries', 'glow_berries',
-            'honey_bottle', 'cake', 'pumpkin_pie', 'milk_bucket', 'tropical_fish', 'pufferfish', 'kelp',
-            'dried_kelp', 'sea_pickle', 'bamboo', 'sugar_cane', 'cactus', 'cocoa_beans', 'melon',
-            'chorus_fruit', 'poisonous_potato', 'spider_eye', 'fermented_spider_eye',
-            // Blocks
-            'dirt', 'grass_block', 'sand', 'gravel', 'oak_log', 'birch_log', 'spruce_log', 'jungle_log',
-            'acacia_log', 'dark_oak_log', 'mangrove_log', 'cherry_log', 'oak_planks', 'birch_planks',
-            'spruce_planks', 'jungle_planks', 'acacia_planks', 'dark_oak_planks', 'mangrove_planks',
-            'cherry_planks', 'oak_leaves', 'birch_leaves', 'spruce_leaves', 'jungle_leaves',
-            'acacia_leaves', 'dark_oak_leaves', 'mangrove_leaves', 'cherry_leaves', 'glass_pane',
-            'white_wool', 'orange_wool', 'magenta_wool', 'light_blue_wool', 'yellow_wool', 'lime_wool',
-            'pink_wool', 'gray_wool', 'light_gray_wool', 'cyan_wool', 'purple_wool', 'blue_wool',
-            'brown_wool', 'green_wool', 'red_wool', 'black_wool', 'terracotta', 'white_terracotta',
-            'orange_terracotta', 'magenta_terracotta', 'light_blue_terracotta', 'yellow_terracotta',
-            'lime_terracotta', 'pink_terracotta', 'gray_terracotta', 'light_gray_terracotta',
-            'cyan_terracotta', 'purple_terracotta', 'blue_terracotta', 'brown_terracotta',
-            'green_terracotta', 'red_terracotta', 'black_terracotta', 'obsidian', 'netherrack',
-            'soul_sand', 'soul_soil', 'basalt', 'blackstone', 'end_stone', 'purpur_block',
-            // Ores & Minerals
-            'iron_ore', 'gold_ore', 'diamond_ore', 'emerald_ore', 'coal_ore', 'copper_ore', 'lapis_ore',
-            'redstone_ore', 'ancient_debris', 'nether_quartz_ore', 'nether_gold_ore', 'deepslate_iron_ore',
-            'deepslate_gold_ore', 'deepslate_diamond_ore', 'deepslate_emerald_ore', 'deepslate_coal_ore',
-            'deepslate_copper_ore', 'deepslate_lapis_ore', 'deepslate_redstone_ore', 'copper_ingot',
-            'raw_iron', 'raw_gold', 'raw_copper', 'lapis_lazuli', 'redstone', 'amethyst_shard',
-            'prismarine_shard', 'prismarine_crystals', 'nautilus_shell', 'heart_of_the_sea',
-            // Netherite Items
-            'netherite_scrap', 'netherite_ingot', 'netherite_sword', 'netherite_pickaxe', 'netherite_axe',
-            'netherite_shovel', 'netherite_hoe', 'netherite_helmet', 'netherite_chestplate',
-            'netherite_leggings', 'netherite_boots',
-            // Golden Items
-            'golden_sword', 'golden_pickaxe', 'golden_axe', 'golden_shovel', 'golden_hoe',
-            'golden_helmet', 'golden_chestplate', 'golden_leggings', 'golden_boots',
-            // Chainmail Items
-            'chainmail_helmet', 'chainmail_chestplate', 'chainmail_leggings', 'chainmail_boots',
-            // Tools & Weapons
-            'crossbow', 'trident', 'shield', 'fishing_rod', 'flint_and_steel', 'shears', 'compass',
-            'clock', 'spyglass', 'lead', 'carrot_on_a_stick', 'warped_fungus_on_a_stick',
-            // Potions & Brewing
-            'potion', 'splash_potion', 'lingering_potion', 'glass_bottle', 'dragon_breath',
-            'blaze_powder', 'blaze_rod', 'brewing_stand', 'cauldron', 'nether_wart', 'ghast_tear',
-            'magma_cream', 'slime_ball', 'phantom_membrane', 'turtle_helmet',
-            // Enchanting
-            'enchanting_table', 'bookshelf', 'anvil', 'grindstone', 'lapis_lazuli',
-            // Redstone
-            'redstone_torch', 'lever', 'stone_button', 'oak_button', 'stone_pressure_plate',
-            'oak_pressure_plate', 'tripwire_hook', 'dispenser', 'dropper', 'hopper', 'chest',
-            'trapped_chest', 'ender_chest', 'shulker_box', 'observer', 'piston', 'sticky_piston',
-            'repeater', 'comparator', 'daylight_detector', 'redstone_lamp', 'note_block', 'jukebox',
-            // Music Discs
-            'music_disc_13', 'music_disc_cat', 'music_disc_blocks', 'music_disc_chirp', 'music_disc_far',
-            'music_disc_mall', 'music_disc_mellohi', 'music_disc_stal', 'music_disc_strad', 'music_disc_ward',
-            'music_disc_11', 'music_disc_wait', 'music_disc_otherside', 'music_disc_pigstep',
-            // Flowers & Dyes
-            'poppy', 'dandelion', 'blue_orchid', 'allium', 'azure_bluet', 'red_tulip', 'orange_tulip',
-            'white_tulip', 'pink_tulip', 'oxeye_daisy', 'cornflower', 'lily_of_the_valley', 'sunflower',
-            'lilac', 'rose_bush', 'peony', 'white_dye', 'orange_dye', 'magenta_dye', 'light_blue_dye',
-            'yellow_dye', 'lime_dye', 'pink_dye', 'gray_dye', 'light_gray_dye', 'cyan_dye', 'purple_dye',
-            'blue_dye', 'brown_dye', 'green_dye', 'red_dye', 'black_dye', 'bone_meal',
-            // Mob Drops
-            'bone', 'spider_eye', 'ender_pearl', 'blaze_rod', 'ghast_tear', 'magma_cream', 'slime_ball',
-            'prismarine_shard', 'prismarine_crystals', 'rabbit_foot', 'rabbit_hide', 'phantom_membrane',
-            'shulker_shell', 'dragon_head', 'wither_skeleton_skull', 'zombie_head', 'player_head',
-            'creeper_head', 'skeleton_skull', 'totem_of_undying', 'elytra', 'dragon_egg',
-            // Spawn Eggs
-            'pig_spawn_egg', 'cow_spawn_egg', 'chicken_spawn_egg', 'sheep_spawn_egg', 'wolf_spawn_egg',
-            'cat_spawn_egg', 'horse_spawn_egg', 'donkey_spawn_egg', 'mule_spawn_egg', 'llama_spawn_egg',
-            'parrot_spawn_egg', 'rabbit_spawn_egg', 'polar_bear_spawn_egg', 'turtle_spawn_egg',
-            'panda_spawn_egg', 'fox_spawn_egg', 'bee_spawn_egg', 'villager_spawn_egg', 'zombie_spawn_egg',
-            'skeleton_spawn_egg', 'spider_spawn_egg', 'creeper_spawn_egg', 'enderman_spawn_egg',
-            'witch_spawn_egg', 'blaze_spawn_egg', 'ghast_spawn_egg', 'magma_cube_spawn_egg',
-            'wither_skeleton_spawn_egg', 'ender_dragon_spawn_egg', 'wither_spawn_egg'
+            'iron_leggings', 'iron_ore', 'iron_pickaxe', 'iron_shovel', 'iron_sword', 'item_frame',
+            'jukebox', 'jungle_leaves', 'jungle_log', 'jungle_planks', 'kelp', 'lapis_lazuli', 'lapis_ore',
+            'lead', 'leather', 'leather_boots', 'leather_chestplate', 'leather_helmet', 'leather_leggings',
+            'lever', 'light_blue_dye', 'light_blue_terracotta', 'light_blue_wool', 'light_gray_dye',
+            'light_gray_terracotta', 'light_gray_wool', 'lilac', 'lily_of_the_valley', 'lime_dye',
+            'lime_terracotta', 'lime_wool', 'lingering_potion', 'llama_spawn_egg', 'magenta_dye',
+            'magenta_terracotta', 'magenta_wool', 'magma_cream', 'magma_cube_spawn_egg', 'mangrove_leaves',
+            'mangrove_log', 'mangrove_planks', 'map', 'melon', 'melon_slice', 'milk_bucket', 'mule_spawn_egg',
+            'mushroom_stew', 'music_disc_11', 'music_disc_13', 'music_disc_blocks', 'music_disc_cat',
+            'music_disc_chirp', 'music_disc_far', 'music_disc_mall', 'music_disc_mellohi', 'music_disc_otherside',
+            'music_disc_pigstep', 'music_disc_stal', 'music_disc_strd', 'music_disc_wait', 'music_disc_ward',
+            'mutton', 'name_tag', 'nautilus_shell', 'nether_gold_ore', 'nether_quartz_ore', 'nether_wart',
+            'netherite_axe', 'netherite_boots', 'netherite_chestplate', 'netherite_helmet', 'netherite_hoe',
+            'netherite_ingot', 'netherite_leggings', 'netherite_pickaxe', 'netherite_scrap', 'netherite_shovel',
+            'netherite_sword', 'netherrack', 'note_block', 'oak_button', 'oak_leaves', 'oak_log', 'oak_planks',
+            'oak_pressure_plate', 'observer', 'obsidian', 'orange_dye', 'orange_terracotta', 'orange_tulip',
+            'orange_wool', 'oxeye_daisy', 'panda_spawn_egg', 'paper', 'parrot_spawn_egg', 'peony',
+            'phantom_membrane', 'pig_spawn_egg', 'pink_dye', 'pink_terracotta', 'pink_tulip', 'pink_wool',
+            'piston', 'player_head', 'poisonous_potato', 'polar_bear_spawn_egg', 'poppy', 'porkchop',
+            'potato', 'potion', 'prismarine_crystals', 'prismarine_shard', 'pufferfish', 'pumpkin',
+            'pumpkin_pie', 'purple_dye', 'purple_terracotta', 'purple_wool', 'purpur_block', 'quartz',
+            'rabbit', 'rabbit_foot', 'rabbit_hide', 'rabbit_spawn_egg', 'rabbit_stew', 'raw_copper',
+            'raw_gold', 'raw_iron', 'red_dye', 'red_terracotta', 'red_tulip', 'red_wool', 'redstone',
+            'redstone_lamp', 'redstone_ore', 'redstone_torch', 'repeater', 'rose_bush', 'rotten_flesh',
+            'saddle', 'salmon', 'sand', 'sea_pickle', 'seeds', 'sheep_spawn_egg', 'shears', 'shield',
+            'shulker_box', 'shulker_shell', 'skeleton_skull', 'skeleton_spawn_egg', 'slime_ball',
+            'soul_sand', 'soul_soil', 'spider_eye', 'spider_spawn_egg', 'splash_potion', 'spruce_leaves',
+            'spruce_log', 'spruce_planks', 'spyglass', 'stick', 'sticky_piston', 'stone', 'stone_axe',
+            'stone_button', 'stone_hoe', 'stone_pickaxe', 'stone_pressure_plate', 'stone_shovel', 'stone_sword',
+            'string', 'sugar', 'sugar_cane', 'sunflower', 'suspicious_stew', 'sweet_berries', 'terracotta',
+            'totem_of_undying', 'trapped_chest', 'trident', 'tripwire_hook', 'tropical_fish', 'turtle_helmet',
+            'turtle_spawn_egg', 'villager_spawn_egg', 'warped_fungus_on_a_stick', 'wheat', 'wheat_seeds',
+            'white_dye', 'white_terracotta', 'white_tulip', 'white_wool', 'witch_spawn_egg', 'wither_skeleton_skull',
+            'wither_skeleton_spawn_egg', 'wither_spawn_egg', 'wolf_spawn_egg', 'wooden_axe', 'wooden_hoe',
+            'wooden_pickaxe', 'wooden_shovel', 'wooden_sword', 'yellow_dye', 'yellow_terracotta', 'yellow_wool',
+            'zombie_head', 'zombie_spawn_egg'
         ];
 
         return items.map(item => 
             `<option value="${item}" ${item === selectedItem ? 'selected' : ''}>${item || 'Select Item...'}</option>`
         ).join('');
+    }
+
+    getItemsList() {
+        return [
+            '', 'acacia_leaves', 'acacia_log', 'acacia_planks', 'allium', 'amethyst_shard', 'ancient_debris', 'anvil',
+            'apple', 'arrow', 'azure_bluet', 'baked_potato', 'bamboo', 'basalt', 'bee_spawn_egg', 'beef',
+            'beetroot', 'beetroot_seeds', 'beetroot_soup', 'birch_leaves', 'birch_log', 'birch_planks', 
+            'black_dye', 'black_terracotta', 'black_wool', 'blackstone', 'blaze_powder', 'blaze_rod', 
+            'blaze_spawn_egg', 'blue_dye', 'blue_orchid', 'blue_terracotta', 'blue_wool', 'bone', 
+            'bone_meal', 'book', 'bookshelf', 'bow', 'bread', 'brewing_stand', 'brick', 'brown_dye', 
+            'brown_terracotta', 'brown_wool', 'bucket', 'cactus', 'cake', 'carrot', 'carrot_on_a_stick',
+            'cat_spawn_egg', 'cauldron', 'chainmail_boots', 'chainmail_chestplate', 'chainmail_helmet',
+            'chainmail_leggings', 'cherry_leaves', 'cherry_log', 'cherry_planks', 'chest', 'chicken',
+            'chicken_spawn_egg', 'chorus_fruit', 'clay_ball', 'clock', 'coal', 'coal_ore', 'cobblestone',
+            'cocoa_beans', 'cod', 'comparator', 'compass', 'cooked_beef', 'cooked_chicken', 'cooked_cod',
+            'cooked_mutton', 'cooked_porkchop', 'cooked_rabbit', 'cooked_salmon', 'cookie', 'copper_ingot',
+            'copper_ore', 'cornflower', 'cow_spawn_egg', 'creeper_head', 'creeper_spawn_egg', 'crossbow',
+            'cyan_dye', 'cyan_terracotta', 'cyan_wool', 'dandelion', 'dark_oak_leaves', 'dark_oak_log',
+            'dark_oak_planks', 'daylight_detector', 'deepslate_coal_ore', 'deepslate_copper_ore',
+            'deepslate_diamond_ore', 'deepslate_emerald_ore', 'deepslate_gold_ore', 'deepslate_iron_ore',
+            'deepslate_lapis_ore', 'deepslate_redstone_ore', 'diamond', 'diamond_axe', 'diamond_boots',
+            'diamond_chestplate', 'diamond_helmet', 'diamond_hoe', 'diamond_leggings', 'diamond_ore',
+            'diamond_pickaxe', 'diamond_shovel', 'diamond_sword', 'dirt', 'dispenser', 'donkey_spawn_egg',
+            'dragon_breath', 'dragon_egg', 'dragon_head', 'dried_kelp', 'dropper', 'elytra', 'emerald',
+            'emerald_ore', 'enchanted_book', 'enchanting_table', 'end_stone', 'ender_chest', 'ender_dragon_spawn_egg',
+            'ender_pearl', 'enderman_spawn_egg', 'experience_bottle', 'feather', 'fermented_spider_eye',
+            'fishing_rod', 'flint', 'flint_and_steel', 'fox_spawn_egg', 'ghast_spawn_egg', 'ghast_tear',
+            'glass', 'glass_bottle', 'glass_pane', 'glow_berries', 'gold_ingot', 'gold_ore', 'golden_apple',
+            'golden_axe', 'golden_boots', 'golden_carrot', 'golden_chestplate', 'golden_helmet', 'golden_hoe',
+            'golden_leggings', 'golden_pickaxe', 'golden_shovel', 'golden_sword', 'grass_block', 'gravel',
+            'gray_dye', 'gray_terracotta', 'gray_wool', 'green_dye', 'green_terracotta', 'green_wool',
+            'grindstone', 'gunpowder', 'heart_of_the_sea', 'honey_bottle', 'hopper', 'horse_spawn_egg',
+            'ink_sac', 'iron_axe', 'iron_boots', 'iron_chestplate', 'iron_helmet', 'iron_ingot',
+            'iron_leggings', 'iron_ore', 'iron_pickaxe', 'iron_shovel', 'iron_sword', 'item_frame',
+            'jukebox', 'jungle_leaves', 'jungle_log', 'jungle_planks', 'kelp', 'lapis_lazuli', 'lapis_ore',
+            'lead', 'leather', 'leather_boots', 'leather_chestplate', 'leather_helmet', 'leather_leggings',
+            'lever', 'light_blue_dye', 'light_blue_terracotta', 'light_blue_wool', 'light_gray_dye',
+            'light_gray_terracotta', 'light_gray_wool', 'lilac', 'lily_of_the_valley', 'lime_dye',
+            'lime_terracotta', 'lime_wool', 'lingering_potion', 'llama_spawn_egg', 'magenta_dye',
+            'magenta_terracotta', 'magenta_wool', 'magma_cream', 'magma_cube_spawn_egg', 'mangrove_leaves',
+            'mangrove_log', 'mangrove_planks', 'map', 'melon', 'melon_slice', 'milk_bucket', 'mule_spawn_egg',
+            'mushroom_stew', 'music_disc_11', 'music_disc_13', 'music_disc_blocks', 'music_disc_cat',
+            'music_disc_chirp', 'music_disc_far', 'music_disc_mall', 'music_disc_mellohi', 'music_disc_otherside',
+            'music_disc_pigstep', 'music_disc_stal', 'music_disc_strd', 'music_disc_wait', 'music_disc_ward',
+            'mutton', 'name_tag', 'nautilus_shell', 'nether_gold_ore', 'nether_quartz_ore', 'nether_wart',
+            'netherite_axe', 'netherite_boots', 'netherite_chestplate', 'netherite_helmet', 'netherite_hoe',
+            'netherite_ingot', 'netherite_leggings', 'netherite_pickaxe', 'netherite_scrap', 'netherite_shovel',
+            'netherite_sword', 'netherrack', 'note_block', 'oak_button', 'oak_leaves', 'oak_log', 'oak_planks',
+            'oak_pressure_plate', 'observer', 'obsidian', 'orange_dye', 'orange_terracotta', 'orange_tulip',
+            'orange_wool', 'oxeye_daisy', 'panda_spawn_egg', 'paper', 'parrot_spawn_egg', 'peony',
+            'phantom_membrane', 'pig_spawn_egg', 'pink_dye', 'pink_terracotta', 'pink_tulip', 'pink_wool',
+            'piston', 'player_head', 'poisonous_potato', 'polar_bear_spawn_egg', 'poppy', 'porkchop',
+            'potato', 'potion', 'prismarine_crystals', 'prismarine_shard', 'pufferfish', 'pumpkin',
+            'pumpkin_pie', 'purple_dye', 'purple_terracotta', 'purple_wool', 'purpur_block', 'quartz',
+            'rabbit', 'rabbit_foot', 'rabbit_hide', 'rabbit_spawn_egg', 'rabbit_stew', 'raw_copper',
+            'raw_gold', 'raw_iron', 'red_dye', 'red_terracotta', 'red_tulip', 'red_wool', 'redstone',
+            'redstone_lamp', 'redstone_ore', 'redstone_torch', 'repeater', 'rose_bush', 'rotten_flesh',
+            'saddle', 'salmon', 'sand', 'sea_pickle', 'seeds', 'sheep_spawn_egg', 'shears', 'shield',
+            'shulker_box', 'shulker_shell', 'skeleton_skull', 'skeleton_spawn_egg', 'slime_ball',
+            'soul_sand', 'soul_soil', 'spider_eye', 'spider_spawn_egg', 'splash_potion', 'spruce_leaves',
+            'spruce_log', 'spruce_planks', 'spyglass', 'stick', 'sticky_piston', 'stone', 'stone_axe',
+            'stone_button', 'stone_hoe', 'stone_pickaxe', 'stone_pressure_plate', 'stone_shovel', 'stone_sword',
+            'string', 'sugar', 'sugar_cane', 'sunflower', 'suspicious_stew', 'sweet_berries', 'terracotta',
+            'totem_of_undying', 'trapped_chest', 'trident', 'tripwire_hook', 'tropical_fish', 'turtle_helmet',
+            'turtle_spawn_egg', 'villager_spawn_egg', 'warped_fungus_on_a_stick', 'wheat', 'wheat_seeds',
+            'white_dye', 'white_terracotta', 'white_tulip', 'white_wool', 'witch_spawn_egg', 'wither_skeleton_skull',
+            'wither_skeleton_spawn_egg', 'wither_spawn_egg', 'wolf_spawn_egg', 'wooden_axe', 'wooden_hoe',
+            'wooden_pickaxe', 'wooden_shovel', 'wooden_sword', 'yellow_dye', 'yellow_terracotta', 'yellow_wool',
+            'zombie_head', 'zombie_spawn_egg'
+        ];
+    }
+
+    createSearchableSelect(id, selectedItem = '', includeNone = true) {
+        const items = this.getItemsList();
+        const filteredItems = includeNone ? items : items.filter(item => item !== '');
+        
+        const container = document.createElement('div');
+        container.className = 'searchable-select';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-input searchable-input';
+        input.id = id;
+        input.value = selectedItem || (includeNone ? '' : 'Select Item...');
+        input.placeholder = includeNone ? 'Type to search items...' : 'Select Item...';
+        input.autocomplete = 'off';
+        
+        const dropdown = document.createElement('div');
+        dropdown.className = 'searchable-dropdown';
+        dropdown.style.display = 'none';
+        
+        // Populate dropdown
+        this.updateSearchDropdown(dropdown, filteredItems, selectedItem, input);
+        
+        // Event listeners
+        input.addEventListener('input', () => {
+            const searchTerm = input.value.toLowerCase();
+            const filtered = filteredItems.filter(item => 
+                item.toLowerCase().includes(searchTerm) || item === ''
+            );
+            this.updateSearchDropdown(dropdown, filtered, input.value, input);
+        });
+        
+        input.addEventListener('focus', () => {
+            dropdown.style.display = 'block';
+        });
+        
+        input.addEventListener('blur', (e) => {
+            // Delay hiding to allow clicking on dropdown items
+            setTimeout(() => {
+                if (!container.contains(document.activeElement)) {
+                    dropdown.style.display = 'none';
+                }
+            }, 150);
+        });
+        
+        container.appendChild(input);
+        container.appendChild(dropdown);
+        
+        return container;
+    }
+    
+    updateSearchDropdown(dropdown, items, selectedItem, input) {
+        dropdown.innerHTML = '';
+        
+        items.slice(0, 50).forEach(item => { // Limit to 50 items for performance
+            const option = document.createElement('div');
+            option.className = 'searchable-option';
+            option.textContent = item || 'None';
+            option.dataset.value = item;
+            
+            if (item === selectedItem) {
+                option.classList.add('selected');
+            }
+            
+            option.addEventListener('mousedown', () => {
+                input.value = item;
+                dropdown.style.display = 'none';
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                input.dispatchEvent(event);
+            });
+            
+            dropdown.appendChild(option);
+        });
+        
+        if (items.length > 50) {
+            const moreOption = document.createElement('div');
+            moreOption.className = 'searchable-option more-items';
+            moreOption.textContent = `... ${items.length - 50} more items (keep typing to filter)`;
+            dropdown.appendChild(moreOption);
+        }
     }
 
     getProfessionOptions() {

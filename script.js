@@ -566,7 +566,7 @@ class VillagerCommandGenerator {
 
             // Boolean flags
             if (document.getElementById('noAI').checked) nbtData.push('NoAI:1b');
-            if (document.getElementById('invulnerable').checked) nbtData.push('invulnerable:1b');
+            if (document.getElementById('invulnerable').checked) nbtData.push('Invulnerable:1b');
             if (document.getElementById('persistenceRequired').checked) nbtData.push('PersistenceRequired:1b');
             if (document.getElementById('silent').checked) nbtData.push('Silent:1b');
             if (document.getElementById('noGravity').checked) nbtData.push('NoGravity:1b');
@@ -604,10 +604,27 @@ class VillagerCommandGenerator {
 
             const command = `/summon villager ${position} {${nbtData.join(',')}}`;
             
-            document.getElementById('commandOutput').textContent = command;
+            // If invulnerable is checked, provide additional commands
+            const isInvulnerable = document.getElementById('invulnerable').checked;
+            let finalCommand = command;
+            
+            if (isInvulnerable) {
+                // Add alternative approach for 1.21.4 compatibility
+                finalCommand = [
+                    `# Main spawn command:`,
+                    command,
+                    ``,
+                    `# Ensure invulnerability (run after spawning):`,
+                    `/data modify entity @e[type=villager,limit=1,sort=nearest] Invulnerable set value 1b`,
+                    ``,
+                    `# Alternative: Use resistance effect for pseudo-invulnerability:`,
+                    `/effect give @e[type=villager,limit=1,sort=nearest] minecraft:resistance 999999 255 true`
+                ].join('\n');
+            }
+            
+            document.getElementById('commandOutput').textContent = finalCommand;
             
             // Generate kill command if villager is invulnerable
-            const isInvulnerable = document.getElementById('invulnerable').checked;
             this.toggleKillCommandSection(isInvulnerable);
             
             if (isInvulnerable) {
@@ -633,7 +650,11 @@ class VillagerCommandGenerator {
             `/kill @e[type=villager,distance=..10]`,
             ``,
             `# Kill all invulnerable villagers:`,
-            `/kill @e[type=villager,nbt={invulnerable:1b}]`,
+            `/kill @e[type=villager,nbt={Invulnerable:1b}]`,
+            ``,
+            `# Remove invulnerability then kill:`,
+            `/data modify entity @e[type=villager,limit=1,sort=nearest] Invulnerable set value 0b`,
+            `/kill @e[type=villager,limit=1,sort=nearest]`,
             ``,
             `# Kill all villagers (use with caution!):`,
             `/kill @e[type=villager]`

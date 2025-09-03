@@ -566,7 +566,7 @@ class VillagerCommandGenerator {
 
             // Boolean flags
             if (document.getElementById('noAI').checked) nbtData.push('NoAI:1b');
-            if (document.getElementById('invulnerable').checked) nbtData.push('Invulnerable:1b');
+            if (document.getElementById('invulnerable').checked) nbtData.push('invulnerable:1b');
             if (document.getElementById('persistenceRequired').checked) nbtData.push('PersistenceRequired:1b');
             if (document.getElementById('silent').checked) nbtData.push('Silent:1b');
             if (document.getElementById('noGravity').checked) nbtData.push('NoGravity:1b');
@@ -633,7 +633,7 @@ class VillagerCommandGenerator {
             `/kill @e[type=villager,distance=..10]`,
             ``,
             `# Kill all invulnerable villagers:`,
-            `/kill @e[type=villager,nbt={Invulnerable:1b}]`,
+            `/kill @e[type=villager,nbt={invulnerable:1b}]`,
             ``,
             `# Kill all villagers (use with caution!):`,
             `/kill @e[type=villager]`

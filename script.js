@@ -564,6 +564,14 @@ class VillagerCommandGenerator {
                 nbtData.push(`Attributes:[{Name:"generic.max_health",Base:${health}d}]`);
             }
 
+            // Rotation
+            const rotationYaw = parseFloat(document.getElementById('rotationYaw').value) || 0;
+            const rotationPitch = parseFloat(document.getElementById('rotationPitch').value) || 0;
+            const rotationRoll = parseFloat(document.getElementById('rotationRoll').value) || 0;
+            if (rotationYaw !== 0 || rotationPitch !== 0 || rotationRoll !== 0) {
+                nbtData.push(`Rotation:[${rotationYaw}f,${rotationPitch}f,${rotationRoll}f]`);
+            }
+
             // Boolean flags
             if (document.getElementById('noAI').checked) nbtData.push('NoAI:1b');
             if (document.getElementById('invulnerable').checked) nbtData.push('Invulnerable:1b');
@@ -726,6 +734,9 @@ class VillagerCommandGenerator {
             document.getElementById('posX').value = '~';
             document.getElementById('posY').value = '~1';
             document.getElementById('posZ').value = '~';
+            document.getElementById('rotationYaw').value = '0';
+            document.getElementById('rotationPitch').value = '0';
+            document.getElementById('rotationRoll').value = '0';
 
             // Reset checkboxes
             const checkboxes = ['noAI', 'invulnerable', 'persistenceRequired', 'silent', 'noGravity', 'glowing', 'customNameVisible', 'baby'];
@@ -800,6 +811,9 @@ class VillagerCommandGenerator {
             posX: document.getElementById('posX').value,
             posY: document.getElementById('posY').value,
             posZ: document.getElementById('posZ').value,
+            rotationYaw: document.getElementById('rotationYaw').value,
+            rotationPitch: document.getElementById('rotationPitch').value,
+            rotationRoll: document.getElementById('rotationRoll').value,
             checkboxes: {
                 noAI: document.getElementById('noAI').checked,
                 invulnerable: document.getElementById('invulnerable').checked,
@@ -824,6 +838,9 @@ class VillagerCommandGenerator {
         document.getElementById('posX').value = data.posX || '~';
         document.getElementById('posY').value = data.posY || '~1';
         document.getElementById('posZ').value = data.posZ || '~';
+        document.getElementById('rotationYaw').value = data.rotationYaw || '0';
+        document.getElementById('rotationPitch').value = data.rotationPitch || '0';
+        document.getElementById('rotationRoll').value = data.rotationRoll || '0';
 
         if (data.checkboxes) {
             Object.keys(data.checkboxes).forEach(key => {
@@ -915,3 +932,10 @@ let generator;
 document.addEventListener('DOMContentLoaded', () => {
     generator = new VillagerCommandGenerator();
 });
+
+// Global function for rotation preset buttons
+function setRotation(yaw, pitch, roll = 0) {
+    document.getElementById('rotationYaw').value = yaw;
+    document.getElementById('rotationPitch').value = pitch;
+    document.getElementById('rotationRoll').value = roll;
+}

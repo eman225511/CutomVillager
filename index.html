@@ -136,6 +136,34 @@
                 </div>
             </section>
 
+            <!-- Rotation Section -->
+            <section class="form-section">
+                <h3 class="section-title">🧭 ROTATION</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">YAW</label>
+                        <input type="number" id="rotationYaw" class="form-input" step="0.1" value="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">PITCH</label>
+                        <input type="number" id="rotationPitch" class="form-input" step="0.1" value="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ROLL</label>
+                        <input type="number" id="rotationRoll" class="form-input" step="0.1" value="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">PRESETS</label>
+                        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-small" onclick="setRotation(180, 0, 0)">NORTH</button>
+                            <button type="button" class="btn btn-small" onclick="setRotation(-90, 0, 0)">EAST</button>
+                            <button type="button" class="btn btn-small" onclick="setRotation(0, 0, 0)">SOUTH</button>
+                            <button type="button" class="btn btn-small" onclick="setRotation(90, 0, 0)">WEST</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Behavior Options -->
             <section class="form-section">
                 <h3 class="section-title">🎮 OPTIONS</h3>

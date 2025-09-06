@@ -233,6 +233,25 @@ body {
   color: #000;
 }
 
+.btn-small {
+  padding: 4px 8px;
+  font-size: 8px;
+  border-width: 2px;
+  min-width: 60px;
+  justify-content: center;
+  background: var(--mc-bg-secondary);
+  color: var(--mc-text-primary);
+}
+
+.btn-small:hover {
+  background: var(--mc-bg-input);
+}
+
+.btn-small:active {
+  border-style: inset;
+  background: var(--mc-bg-primary);
+}
+
 .command-preview {
   background: var(--mc-bg-primary);
   border: 3px solid var(--mc-border-color);
